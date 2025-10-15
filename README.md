@@ -1,150 +1,278 @@
-# FitAI Frontend (React + Vite)
+# 💪 FitAI - Personal Trainer Bot
 
-Modern, responsive frontend for the Personal Trainer Bot application.
+A full-stack AI-powered fitness and nutrition planning application that generates personalized workout and diet plans based on user data and body image classification.
 
-## Setup
+## 🌟 Features
 
-1. **Install dependencies:**
-```bash
-npm install
+- **JWT Authentication** - Secure user registration and login
+- **Body Type Classification** - Uses Hugging Face's ResNet model to classify body types (Skinny, Ordinary, Overweight, Very Muscular)
+- **AI-Powered Plan Generation** - Leverages Google Gemini API to create personalized fitness and nutrition plans
+- **Chat Interface** - Interactive chatbot for follow-up questions and guidance
+- **Plan Management** - Save, view, and manage multiple fitness plans
+- **Modern UI** - Beautiful, responsive design built with React and TailwindCSS
+
+## 🏗️ Tech Stack
+
+### Frontend
+- **React 18** - UI library
+- **Vite** - Build tool
+- **TailwindCSS** - Styling
+- **React Router** - Navigation
+- **Zustand** - State management
+- **Axios** - HTTP client
+
+### Backend
+- **FastAPI** - Python web framework
+- **MongoDB** - NoSQL database
+- **PyTorch** - Deep learning framework
+- **Transformers** - Hugging Face model library
+- **Google Gemini API** - AI text generation
+- **JWT** - Authentication
+
+## 📁 Project Structure
+
+```
+Fit_AI/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/    # Reusable components
+│   │   ├── pages/         # Page components
+│   │   ├── services/      # API services
+│   │   ├── store/         # State management
+│   │   ├── App.jsx        # Main app component
+│   │   └── main.jsx       # Entry point
+│   ├── package.json
+│   └── vite.config.js
+│
+├── server/                # FastAPI backend
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── routes/   # API endpoints
+│   │   ├── core/         # Config & security
+│   │   ├── db/           # Database connection
+│   │   ├── models/       # Data models
+│   │   └── services/     # Business logic
+│   ├── main.py           # FastAPI app
+│   └── requirements.txt
+│
+├── app.py                # Original Streamlit app (reference)
+└── README.md
 ```
 
-2. **Configure environment (optional):**
+## 🚀 Getting Started
 
-Create a `.env` file in the client directory:
+### Prerequisites
+
+- **Python 3.9+**
+- **Node.js 18+**
+- **MongoDB** (local or Atlas)
+- **Google Gemini API Key**
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd Fit_AI
+```
+
+### 2. Backend Setup
+
+```bash
+cd server
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create .env file
+# Copy the example below and fill in your values
+```
+
+**server/.env**
 ```env
-VITE_API_URL=http://localhost:8000/api
+MONGODB_URL=mongodb://localhost:27017
+MONGODB_DB_NAME=fitness_ai
+SECRET_KEY=your-super-secret-jwt-key-change-this
+GEMINI_API_KEY=your-google-gemini-api-key
 ```
 
-3. **Run development server:**
+**Start the backend server:**
 ```bash
-npm run dev
-
+python main.py
 ```
-#output
+
+The API will be available at `http://localhost:8000`
+
+### 3. Frontend Setup
+
+```bash
+cd client
+
+# Install dependencies
+npm install
+
+# Create .env file (optional)
+echo "VITE_API_URL=http://localhost:8000/api" > .env
+
+# Start development server
+npm run dev
+```
+
 The app will be available at `http://localhost:5173`
 
-## Build for Production
+### 4. MongoDB Setup
 
+**Option 1: Local MongoDB**
 ```bash
+# Install MongoDB and start the service
+mongod
+```
+
+**Option 2: MongoDB Atlas**
+1. Create a free cluster at [mongodb.com/atlas](https://www.mongodb.com/atlas)
+2. Get your connection string
+3. Update `MONGODB_URL` in server/.env
+
+## 🔑 API Endpoints
+
+### Authentication
+- `POST /api/auth/signup` - Register new user
+- `POST /api/auth/login` - Login user
+
+### Users
+- `GET /api/users/me` - Get current user profile
+- `PUT /api/users/me` - Update user profile
+
+### AI
+- `POST /api/ai/classify-image` - Classify body type from image
+- `POST /api/ai/generate-plan` - Generate personalized fitness plan
+- `POST /api/ai/chat` - Chat with AI assistant
+
+### Plans
+- `GET /api/plans/` - Get all user plans
+- `POST /api/plans/` - Create new plan
+- `GET /api/plans/{id}` - Get specific plan
+- `DELETE /api/plans/{id}` - Delete plan
+
+## 🎨 Features Walkthrough
+
+### 1. Sign Up / Login
+Create an account or login with existing credentials.
+
+### 2. Dashboard
+- Upload a photo for body type classification
+- Enter your personal details (age, weight, height, etc.)
+- Select your fitness goal
+- Generate a personalized 6-week plan
+
+### 3. My Plans
+- View all your saved fitness plans
+- See detailed workout and nutrition information
+- Delete old plans
+
+### 4. Chat
+- Ask questions about fitness and nutrition
+- Get personalized advice based on your plans
+- Interactive AI assistant powered by Gemini
+
+## 🔧 Configuration
+
+### Environment Variables
+
+**Backend (server/.env)**
+- `MONGODB_URL` - MongoDB connection string
+- `MONGODB_DB_NAME` - Database name
+- `SECRET_KEY` - JWT secret key (use a strong random string)
+- `GEMINI_API_KEY` - Google Gemini API key
+
+**Frontend (client/.env)**
+- `VITE_API_URL` - Backend API URL (default: http://localhost:8000/api)
+
+## 📦 Build for Production
+
+### Backend
+```bash
+cd server
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+### Frontend
+```bash
+cd client
 npm run build
+# Serve the dist/ folder with your preferred web server
 ```
 
-This creates an optimized build in the `dist/` directory.
+## 🧪 Development
 
-Preview production build:
+### Running Tests
 ```bash
-npm run preview
+# Backend
+cd server
+pytest
+
+# Frontend
+cd client
+npm test
 ```
 
-## Project Structure
-
-```
-client/
-├── src/
-│   ├── components/
-│   │   └── Layout.jsx       # Main layout with navigation
-│   ├── pages/
-│   │   ├── Login.jsx        # Login page
-│   │   ├── Signup.jsx       # Registration page
-│   │   ├── Dashboard.jsx    # Main dashboard (generate plans)
-│   │   ├── Plans.jsx        # View saved plans
-│   │   └── Chat.jsx         # AI chatbot interface
-│   ├── services/
-│   │   └── api.js           # API service layer
-│   ├── store/
-│   │   └── authStore.js     # Zustand state management
-│   ├── App.jsx              # Main app with routing
-│   ├── main.jsx             # Entry point
-│   └── index.css            # Tailwind styles
-├── index.html
-├── package.json
-├── vite.config.js
-└── tailwind.config.js
-```
-
-## Key Features
-
-- **React Router** for navigation
-- **Zustand** for state management (with persistence)
-- **TailwindCSS** for styling
-- **Axios** with interceptors for API calls
-- **React Hot Toast** for notifications
-- **Lucide React** for icons
-- **Responsive Design** - works on mobile, tablet, and desktop
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## Styling
-
-The app uses TailwindCSS with custom components:
-- `.btn-primary` - Primary button style
-- `.btn-secondary` - Secondary button style
-- `.input-field` - Input field style
-- `.card` - Card container style
-
-Colors are based on the `primary` color palette (blue).
-
-## State Management
-
-Uses Zustand with localStorage persistence for:
-- User authentication state
-- JWT token storage
-- User profile data
-
-## API Integration
-
-All API calls go through `src/services/api.js` which:
-- Adds JWT token to requests
-- Handles 401 errors (auto-logout)
-- Provides typed API functions
-
-## Deployment
-
-### Static Hosting (Netlify, Vercel, etc.)
-
-1. Build the app:
+### Code Quality
 ```bash
-npm run build
+# Backend linting
+cd server
+flake8 app/
+
+# Frontend linting
+cd client
+npm run lint
 ```
 
-2. Deploy the `dist/` folder
+## 🐛 Troubleshooting
 
-3. Configure environment variables in your hosting provider
+### Model Download Issues
+The Hugging Face model (~85MB) downloads on first run. Ensure you have:
+- Stable internet connection
+- Sufficient disk space
+- No firewall blocking huggingface.co
 
-### Nginx
+### MongoDB Connection Issues
+- Verify MongoDB is running: `mongosh`
+- Check connection string format
+- For Atlas, whitelist your IP address
 
-```nginx
-server {
-    listen 80;
-    server_name yourdomain.com;
-    
-    root /path/to/dist;
-    index index.html;
-    
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-    
-    location /api {
-        proxy_pass http://localhost:8000;
-    }
-}
-```
+### CORS Issues
+The backend allows `localhost:3000` and `localhost:5173` by default.
+Update `ALLOWED_ORIGINS` in `server/app/core/config.py` if needed.
 
-## Browser Support
+## 📝 License
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+MIT License - Feel free to use this project for personal or commercial purposes.
 
-## Contributing
+## 🙏 Acknowledgments
 
-Please follow the existing code style and component patterns.
+- **Hugging Face** - Body classification model (glazzova/body_complexion)
+- **Google Gemini** - AI text generation
+- **FastAPI** - Modern Python web framework
+- **React** - UI library
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📧 Contact
+
+For questions or support, please open an issue on GitHub.
+
+---
+
+Built with ❤️ using React, FastAPI, and AI
 
