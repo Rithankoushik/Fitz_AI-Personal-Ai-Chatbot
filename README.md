@@ -19,8 +19,9 @@ VITE_API_URL=http://localhost:8000/api
 3. **Run development server:**
 ```bash
 npm run dev
-```
 
+```
+#output
 The app will be available at `http://localhost:5173`
 
 ## Build for Production
