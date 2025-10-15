@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import { LogOut, Home, FileText, MessageCircle } from 'lucide-react'
+import { LogOut, Home, FileText, MessageCircle, Utensils } from 'lucide-react'
 
 export default function Layout() {
   const location = useLocation()
@@ -60,6 +60,18 @@ export default function Layout() {
                 >
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Chat
+                </Link>
+                
+                <Link
+                  to="/food-tracker"
+                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium ${
+                    isActive('/food-tracker')
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-gray-700 hover:bg-gray-100'
+                  }`}
+                >
+                  <Utensils className="w-4 h-4 mr-2" />
+                  Food Tracker
                 </Link>
               </div>
             </div>

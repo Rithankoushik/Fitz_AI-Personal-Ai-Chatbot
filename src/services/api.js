@@ -107,5 +107,33 @@ export const plansAPI = {
   },
 }
 
+// Food API
+export const foodAPI = {
+  searchFood: async (query, limit = 20) => {
+    const response = await api.get('/food/search', {
+      params: { query, limit }
+    })
+    return response.data
+  },
+  
+  logFood: async (foodData) => {
+    const response = await api.post('/food/log', foodData)
+    return response.data
+  },
+  
+  getDailyLog: async (date = null) => {
+    const params = date ? { target_date: date } : {}
+    const response = await api.get('/food/daily', { params })
+    return response.data
+  },
+  
+  deleteFoodLog: async (logId, mealType, foodIndex) => {
+    const response = await api.delete(`/food/log/${logId}`, {
+      params: { meal_type: mealType, food_index: foodIndex }
+    })
+    return response.data
+  },
+}
+
 export default api
 

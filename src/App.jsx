@@ -6,6 +6,7 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import Plans from './pages/Plans'
 import Chat from './pages/Chat'
+import FoodTracker from './pages/FoodTracker'
 import Layout from './components/Layout'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/dashboard" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
           <Route path="/plans" element={isAuthenticated ? <Plans /> : <Navigate to="/login" />} />
           <Route path="/chat" element={isAuthenticated ? <Chat /> : <Navigate to="/login" />} />
+          <Route path="/food-tracker" element={isAuthenticated ? <FoodTracker /> : <Navigate to="/login" />} />
           <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
         </Route>
       </Routes>

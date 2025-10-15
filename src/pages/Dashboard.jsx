@@ -13,9 +13,9 @@ export default function Dashboard() {
   
   const [formData, setFormData] = useState({
     name: '',
-    age: 25,
+    age: 21,
     sex: 'Male',
-    weight: 70,
+    weight: 60,
     height_cm: 170,
     activity_level: 'Moderately active',
     goal: 'Lose fat / get lean',
